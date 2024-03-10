@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./src/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>Invoice</title>
+</head>
+<body>
+    <div class="header">
+        <div class="invoice">
+            <h2>Invoice</h2>
+        </div>
+        <div class="logo">
+            <a onclick="clearNwrite()"><img src="./src/image.png" alt="RoboICT img"></a>
+        </div>
+    </div>
+    <div class="main">
+        <div class="bill_info">
+        </div>
+        <div class="main_list">
+
+            <hr width="95%" color="#7E1608">
+            <h2>Total 1150</h2>
+
+        </div>
+    </div>
+    <div class="footer">
+        <div class="address">
+            <p>01300455888</p>
+            <p style="margin-top: -30px;">Salauddin, Cumilla</p>
+        </div>
+        <div class="weblink">
+            <p>www.roboict.com</p>
+        </div>
+    </div>
+
+    <script>
+        var PDFcart = JSON.parse( localStorage.getItem("PDFcart") );
+        console.log()
+        var customer_name = PDFcart["name"];
+        var customer_address = PDFcart["address"];
+        var customer_number = PDFcart["number"];
+        var customer_net = PDFcart["net"];
+        var product_length = PDFcart["products"].length;
+    
+        var bill_info = `
+        <div class="bill">
+            <h3>BILLED TO:</h3>
+            <p>${customer_name}</p>
+            <h4>${customer_address}</h4>
+            <h4>${customer_number}</h4>
+        </div>
+        <div class="invoiceNdate">
+            <h2>Invoice No. 1</h2>
+            <p>February 25, 2024<p>
+        </div>
+        `;
+        $(".bill_info").html(bill_info);
+    
+        var table_main = [];
+
+        table_main.push(`
+        <table>
+            <tr>
+            <th>No</th>
+            <th>Product</th>
+            <th>QTY</th>
+            <th>Price</th>
+            <th>Total</th>
+            </tr>
+        `);
+        for (var i=0;i<product_length;i++) {
+            table_main.push(`
+            <tr>
+                <td>${i+1}</td>
+                <td>${PDFcart["products"][i]["title"]}</td>
+                <td>${PDFcart["products"][i]["quantity"]}</td>
+                <td>${PDFcart["products"][i]["price"]}</td>
+                <td>${PDFcart["products"][i]["total"]}</td>
+            </tr>
+            `);
+        }
+        table_main.push(`</table>`);
+        table_main.push(`
+            <hr width="95%" color="#7E1608">
+            <h2>Total ${customer_net}</h2>
+        `);
+        $(".main_list").html(table_main.join(""));
+    
+        window.print();
+
+        function clearNwrite() {
+            alert('Clearing and Writing.');
+            localStorage.clear();
+
+            $.ajax("/products/write", {
+                data : "",
+                contentType : 'application/json',
+                type : 'POST',
+                success: function(data){
+                    location.replace("../index.html");
+                }
+            })
+        }
+    
+    </script>
+
+</body>
+</html>

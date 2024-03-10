@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <title></title>
+</head>
+<body> 
+  <div class="nav-bar">
+    <li><a href="index.html">List</a></li>
+    <li><a href="cart.html">Cart</a></li>
+  </div>
+
+  <div class="products" id="productsList">
+  </div>
+
+</body>
+</html>
+
+<script>
+var cartItems = JSON.parse(localStorage.getItem("cartItems"));
+
+if (cartItems == null || Object.keys(cartItems).length == 0) {
+  $("#productsList").html("<h1>Your Cart Is Empty</h1>");
+} else {
+  var reqProductsKeys = Object.keys(cartItems)
+  var productsList = []
+
+  for (let i = 0; i < reqProductsKeys.length; i++) {
+    var id = reqProductsKeys[i];
+    var title = cartItems[id]["title"];
+    var quantity = cartItems[id]["quantity"];
+    var price = cartItems[id]["price"]
+
+    productsList.push(`
+      <div class="product">
+        <h3><button id="${id}" onClick="crossButton(this.id)"><b>X</b></button> <span style="color:red;">NAME:</span> ${title} ------ <span style="color:red;">Quantity:</span> ${quantity} ------- <span style="color:red;">Price:</span> ${quantity} * ${price} = ${quantity*price}</h3>
+      </div>
+    `);
+  }
+  productsList.push(`<button onClick="sendToServer()">NEXT</button>`);
+  $("#productsList").html(productsList.join(" "));
+}
+
+
+// Customer Info To Local Storage
+
+function sendToServer() {
+  var cartItems = localStorage.getItem("cartItems");
+  var customerInfo = localStorage.getItem("customerInfo");
+
+  $.ajax("/products/sell", {
+    data : JSON.stringify([cartItems, customerInfo]),
+    contentType : 'application/json',
+    type : 'POST',
+    success: function(data){
+      localStorage.setItem("PDFcart", JSON.stringify(data));
+      location.replace("./invoice/invoice.html");
+    }
+  })
+}
+
+
+function crossButton(clicked_id) {
+  var old_obj = JSON.parse(localStorage.getItem("cartItems"));
+  delete old_obj[clicked_id];
+  localStorage.setItem("cartItems", JSON.stringify(old_obj));
+  location.reload();
+}
+
+function getParameter(parameter_name) {
+    let parameters = new URLSearchParams( window.location.search );
+    return parameters.get( parameter_name );
+};
+</script>

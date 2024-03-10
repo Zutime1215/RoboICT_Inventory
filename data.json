@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "title": "Arduino Nano",
+    "price": 500,
+    "last_updated": "3.1.2024",
+    "stock": 9,
+    "category": "microcontroller",
+    "images": ["https://cdn.dummyjson.com/product-images/1/1.jpg"]
+  },
+  {
+    "id": 2,
+    "title": "ESP-8266",
+    "price": 450,
+    "last_updated": "3.2.2024",
+    "stock": 13,
+    "category": "microcontroller",
+    "images": ["https://cdn.dummyjson.com/product-images/1/2.jpg"]
+  },
+  {
+    "id": 3,
+    "title": "Neo 6m",
+    "price": 650,
+    "last_updated": "3.2.2024",
+    "stock": 19,
+    "category": "gps",
+    "images": ["https://cdn.dummyjson.com/product-images/1/2.jpg"]
+  },
+  {
+    "id": 4,
+    "title": "sim 800L",
+    "price": 600,
+    "last_updated": "3.1.2024",
+    "stock": 8,
+    "category": "GSM",
+    "images": ["https://cdn.dummyjson.com/product-images/1/1.jpg"]
+  }
+]

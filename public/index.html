@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <title></title>
+</head>
+<body> 
+  <div class="nav-bar">
+    <li><a href="index.html">List</a></li>
+    <li><a href="cart.html">Cart</a></li>
+  </div>
+  
+  <div id="customer">
+  </div>
+  
+  <div class="products" id="productsList">
+
+  </div>
+
+</body>
+</html>
+
+<script>
+
+  function getParameter(parameter_name) {
+      let parameters = new URLSearchParams( window.location.search );
+      return parameters.get( parameter_name );
+  };
+
+
+// Customer Div ---------------------------------
+var customer_part =  `
+    <form class="customer_info">
+      <div>
+        <label>Billed To</label>
+        <input type="text" id="cName" name="cName">
+      </div>
+      <div>
+        <label>Address</label>
+        <input type="text" id="cAdd" name="cAdd">
+      </div>
+      <div>
+        <label>Mobile</label>
+        <input type="number" id="cNum" name="cNum">
+      </div>
+      <input type="submit" value="DONE">
+    </form>`;
+  $("#customer").html(customer_part);
+
+  var customerObj = {
+  "name": getParameter("cName"),
+  "address": getParameter("cAdd"),
+  "number": getParameter("cNum")
+}
+
+if ( (customerObj["name"] != "" && customerObj["name"] != null) && (customerObj["address"] != "" && customerObj["name"] != null) && (customerObj["number"] != "" && customerObj["name"] != null) ) {
+  localStorage.setItem("customerInfo", JSON.stringify(customerObj));
+}
+// Customer Div -------------------------------
+
+
+  var id = parseInt(getParameter("id") || '-1');
+  var title = getParameter("title");
+  var quantity = parseInt(getParameter("quantity") || '-1');
+  var price = parseInt(getParameter("price"));
+
+  if ( id > 0 && quantity > 0 ) { // valid id exists
+    var old_obj = JSON.parse(localStorage.getItem("cartItems") || "{} ");
+    var old_id_obj = old_obj[id];
+
+    var old_quantity = 0;
+    if (old_id_obj !== undefined && old_id_obj["quantity"] !== undefined) {
+      old_quantity = parseInt(old_id_obj["quantity"]);
+    }
+
+    old_obj[id] = {
+      "id": id,
+      "title": title,
+      "quantity": old_quantity + quantity,
+      "price": price
+    };
+
+    localStorage.setItem("cartItems", JSON.stringify(old_obj));
+  }
+
+// Product List 
+  var productsList = []
+  $.get("/products", function(data, status){
+    data.forEach(element => {
+      productsList.push(`
+        <div class="product">
+          <div class="productLeft">
+            <h3>${element["title"]}</h3>
+            <h5>TK ${element["price"]}</h5>
+          </div>
+          <div class="productRight">
+            <form>
+              <input type="hidden" id="id" name="id" value="${element["id"]}" readonly>
+              <input type="hidden" id="title" name="title" value="${element["title"]}" readonly>
+              <input type="hidden" id="price" name="price" value="${element["price"]}" readonly>
+              <input type="text" id="quantity" name="quantity">
+              <input type="submit" value="Add To Cart">
+            </form>
+            <h4>Stock ${element["stock"]}</h4>
+          </div>
+        </div>
+      `);
+    });
+    $("#productsList").html(productsList.join(" "));
+  });
+</script>

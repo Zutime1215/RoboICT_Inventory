@@ -1,0 +1,40 @@
+body{
+    /* width: 90%; */
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.nav-bar {
+    display: flex;
+    justify-content: space-around;
+}
+
+
+.product {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+    background-color: #f1f1f1;
+}
+
+.product > div,form {
+    padding: 5px;
+    font-size: 18px;
+}
+
+.custom {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.customer_info {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.customer_info > div {
+    margin: 10px;
+}

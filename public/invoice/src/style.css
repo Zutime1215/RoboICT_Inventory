@@ -1,0 +1,93 @@
+body {
+    background-color: #F9F3EC;
+    font-family: arial, sans-serif;
+}
+
+.header {
+    display: flex;
+    justify-content: space-around;
+}
+
+.invoice {
+    margin-top: 25px;
+    margin-left: -135px;
+    width: 350px;
+    height: 97px;
+    background-color: #E64525;
+    font-size: 22px;
+    color: #F9F3EC;
+    display: flex;
+    justify-content: center;
+}
+
+.logo img {
+    margin-top: 25px;
+    margin-right: -125px;
+    width: 130px;
+}
+
+.bill_info {
+    display: flex;
+    justify-content: space-around;
+}
+.bill {
+    margin-left: -110px;
+    color: #7E1608;
+}
+.bill p,h4 {
+    margin-top: -15px;
+}
+
+.invoiceNdate {
+   margin-right: -160px;
+}
+
+.invoiceNdate p {
+    margin-top: -15px;
+}
+
+.invoiceNdate h2, p {
+    color: #7E1608;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 95%;
+    margin-left: 18px;
+}
+table th {
+    color: #7E1608;
+}
+
+td {
+    border: 1px solid #7E1608;
+    padding: 8px;
+}
+
+.main_list h2{
+    color: #7E1608;
+    float: right;
+    margin-right: 50px;
+}
+
+.footer {
+    font-family: arial, sans-serif;
+    background-color: #E64525;
+    margin-top: 80px;
+    width: 80%;
+    height: 100px;
+    float: right;
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer p{
+    color: #F9F3EC;
+    padding: 10px;
+    font-size: 18px;
+}
+
+.weblink {
+    margin-top: 50px;
+}
